@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Casa, Registro
-from .forms import CasaForm, RegistroForm
+from .forms import CasaForm, RegistroForm, RegistroFormCasa, AtualizarRegistro
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView, View
 from django.contrib import messages
 from django.urls import reverse
@@ -44,6 +44,19 @@ class DetalharCasa(DetailView):
     template_name = 'casa/detalhar.html'
     context_object_name = 'casa'
 
+def NovoRegistroDaCasa(request, casa_id):
+    casa = Casa.objects.get(pk=casa_id)
+    if request.method == 'POST':
+        form = RegistroFormCasa(request.POST)
+        if form.is_valid():
+            registro = form.save(commit=False)
+            registro.casa = casa
+            registro.save()
+            return redirect('home')  # Redirecione para a página de sucesso após a criação do registro
+    else:
+        form = RegistroFormCasa(initial={'casa': casa})
+    return render(request, 'casa/novo_registro.html', {'form': form})
+
 # ---------- Views relacionadas à classe Registro ---------------
     
 class NovoRegistro(CreateView):
@@ -72,7 +85,7 @@ class ApagarRegistro(DeleteView):
 class AtualizarRegistro(UpdateView):
     model = Registro
     template_name = 'registro/atualizar.html'
-    form_class = RegistroForm
+    form_class = AtualizarRegistro
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, "Registro atualizado com sucesso!")

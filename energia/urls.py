@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
 from .views import UserProfileView, Home, HistoricoCasa, Painel
-from gestao.views import NovaCasa, Casas, ApagarCasa, AtualizarCasa, DetalharCasa, NovoRegistro, Registros, DetalharRegistro, AtualizarRegistro, ApagarRegistro
+from gestao.views import NovaCasa, Casas, ApagarCasa, AtualizarCasa, DetalharCasa, NovoRegistro, Registros, DetalharRegistro, AtualizarRegistro, ApagarRegistro, NovoRegistroDaCasa
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
@@ -31,6 +31,7 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('historico_casa/<int:casa_id>/', HistoricoCasa.as_view(), name='historico'),
     path('painel/<int:casa_id>/', Painel.as_view(), name='painel'),
+    path('adicionar-registro/<int:casa_id>', NovoRegistroDaCasa, name='registrar-registro'),
 
     # ---------- URLs relacionadas à classe Casa ---------------
 
