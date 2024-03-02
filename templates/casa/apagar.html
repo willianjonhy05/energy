@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static bootstrap5 %}
+
+{% block css %}  {% endblock %}
+{% block js %}  {% endblock %}
+{% block title %}Apagar Casa{% endblock %}
+
+
+{% block conteudo %}
+
+<div class="container my-3">
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-custom overflow-hidden text-center bg-body-tertiary border rounded-3">
+          <li class="breadcrumb-item p-2">
+              <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'home' %}">
+                  <i class="fa-solid fa-house"></i><span class="m-2"></span>
+                  Página Inicial
+              </a>
+          </li>
+          <li class="breadcrumb-item p-2">
+              <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'casas' %}">Lista de Casas</a>
+          </li>
+          <li class="breadcrumb-item p-2 active" aria-current="page">
+              Apagar Casa
+          </li>
+      </ol>
+  </nav>
+</div>
+
+<div class="container mt-3 text-center">
+    <p>Você tem certeza de que deseja excluir esta casa?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Excluir</button>
+      <a href="{% url 'casas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

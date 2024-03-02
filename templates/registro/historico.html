@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static bootstrap5 %}
+
+{% block css %}  {% endblock %}
+{% block js %}  {% endblock %}
+{% block title %}Registros{% endblock %}
+
+
+{% block conteudo %}
+
+
+<div class="container">
+    <h2>Detalhes do Registro</h2>
+    <hr>
+    <h3>Informações da Casa</h3>
+    <p><strong>Rua:</strong> {{ casa.rua }}</p>
+    <p><strong>Bairro:</strong> {{ casa.bairro }}</p>
+    <p><strong>Número:</strong> {{ casa.numero }}</p>
+    <p><strong>Titular:</strong> {{ casa.titular }}</p>
+    <p><strong>Contrato com Distribuidora:</strong> {{ casa.contrato }}</p>
+
+    <h3>Registros de Consumo e Injeção de Energia Elétrica</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>                
+                <th>Consumo</th>
+                <th>Injeção</th>
+                <th>Autor do Registro</th>
+                <th>Oficial</th>
+                <th>Atualizar</th>
+                <th>Deletar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registro in registros %}
+            {% if registro.oficial == False %}
+
+            <tr>
+                <th>{{registro.data}}</th>
+                <td>KW {{registro.consumo}}</td>
+                <td>KW {{registro.injecao}}</td>
+                <td>{{registro.autor}}</td>
+                <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="btn btn-success rounded-5 btn-sm"><i class="fa-regular fa-eye"></i></a></td>
+                <td><a href="{% url 'atualizar-registro' pk=registro.pk %}" class="btn btn-primary rounded-5 btn-sm"><i class="fa-solid fa-rotate"></i></a></td>
+                <td><a href="{% url 'apagar-registro' pk=registro.pk %}" class="btn btn-danger rounded-5 btn-sm"><i class="fa-solid fa-trash-can"></i></a></td>
+            </tr>
+
+
+            {% else %}
+            <tr class="table-info">
+                <th>{{registro.data}}</th>
+                <td>KW {{registro.consumo}}</td>
+                <td>KW {{registro.injecao}}</td>
+                <td>{{registro.autor}}</td>
+                <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="btn btn-success rounded-5 btn-sm"><i class="fa-regular fa-eye"></i></a></td>
+                <td><a href="{% url 'atualizar-registro' pk=registro.pk %}" class="btn btn-primary rounded-5 btn-sm"><i class="fa-solid fa-rotate"></i></a></td>
+                <td><a href="{% url 'apagar-registro' pk=registro.pk %}" class="btn btn-danger rounded-5 btn-sm"><i class="fa-solid fa-trash-can"></i></a></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

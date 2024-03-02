@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static bootstrap5 %}
+
+{% block css %}  {% endblock %}
+{% block js %} <script src="/static/js/cep.js"></script> {% endblock %}
+{% block title %}Cadastrar Casa{% endblock %}
+
+
+{% block conteudo %}
+
+<div class="container my-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-custom overflow-hidden text-center bg-body-tertiary border rounded-3">
+            <li class="breadcrumb-item p-2">
+                <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'home' %}">
+                    <i class="fa-solid fa-house"></i><span class="m-2"></span>
+                    Página Inicial
+                </a>
+            </li>
+            <li class="breadcrumb-item p-2">
+                <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'casas' %}">Lista de Casas</a>
+            </li>
+            <li class="breadcrumb-item p-2 active" aria-current="page">
+                Cadastrar Casa
+            </li>
+        </ol>
+    </nav>
+</div>
+
+
+<div class="container mt-3">
+    <h2>Cadastrar Casa</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-primary" type="submit">Cadastrar</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static bootstrap5 %}
+
+{% block css %}  {% endblock %}
+{% block js %}  {% endblock %}
+{% block title %}Detalhar Casa{% endblock %}
+
+
+{% block conteudo %}
+
+<div class="container my-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-custom overflow-hidden text-center bg-body-tertiary border rounded-3">
+            <li class="breadcrumb-item p-2">
+                <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'home' %}">
+                    <i class="fa-solid fa-house"></i><span class="m-2"></span>
+                    Página Inicial
+                </a>
+            </li>
+            <li class="breadcrumb-item p-2">
+                <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'casas' %}">Lista de Casas</a>
+            </li>
+            <li class="breadcrumb-item p-2 active" aria-current="page">
+                Detalhar Casa
+            </li>
+        </ol>
+    </nav>
+</div>
+
+
+<div class="d-flex container justify-content-center">
+    <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Casa Nº {{casa.numero}}</h5>
+            <p class="card-text">Rua: {{casa.rua}}</p>
+            <p class="card-text">Bairro: {{casa.bairro}}</p>
+            <p class="card-text">Titular: {{casa.titular}} </p>
+            <p class="card-text">CEP: {{casa.cep}} </p>
+            <p class="card-text">Contrato Nº: {{casa.contrato}}</p>
+            <!-- <p class="card-text"><small class="text-body-secondary"></small></p> -->
+            <a href="{% url 'atualizar-casa' pk=casa.pk %}" class="btn btn-primary rounded-5 btn-sm"><i class="fa-solid fa-rotate"></i></a>
+            <a href="{% url 'apagar-casa' pk=casa.pk %}" class="btn btn-danger rounded-5 btn-sm"><i class="fa-solid fa-trash-can"></i></a>
+            <a href="{% url 'historico' casa_id=casa.pk %}" class="btn btn-info rounded-5 btn-sm"><i class="fa-regular fa-file-lines"></i></a>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+
+{% endblock %}
