@@ -52,7 +52,7 @@ def NovoRegistroDaCasa(request, casa_id):
             registro = form.save(commit=False)
             registro.casa = casa
             registro.save()
-            return redirect('home')  # Redirecione para a página de sucesso após a criação do registro
+            return redirect('historico', casa_id=casa.pk)  # Redirecione para a página de sucesso após a criação do registro
     else:
         form = RegistroFormCasa(initial={'casa': casa})
     return render(request, 'casa/novo_registro.html', {'form': form})
@@ -80,7 +80,7 @@ class ApagarRegistro(DeleteView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, "Registro apagado com sucesso!")
-        return reverse('registros')
+        return reverse('casas')
 
 class AtualizarRegistro(UpdateView):
     model = Registro
