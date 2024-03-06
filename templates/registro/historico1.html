@@ -40,12 +40,13 @@
     <p><strong>Contrato com Distribuidora:</strong> {{ casa.contrato }}</p>
 
     <h3>Registros de Consumo e Injeção de Energia Elétrica</h3>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th>Data</th>
                 <th>Consumo</th>
                 <th>Injeção</th>
+                <!-- <th>Saldo</th> -->
                 <th>Autor do Registro</th>
                 <th>Oficial</th>
                 <th>Atualizar</th>
@@ -60,6 +61,7 @@
                 <th>{{registro.data}}</th>
                 <td>{{registro.consumo}} KWh</td>
                 <td>{{registro.injecao}} KWh</td>
+                <!-- <td>{{registro.saldo_parcial}} KWh</td> -->
                 <td>{{registro.autor}}</td>
                 <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="btn btn-success rounded-5 btn-sm"><i
                             class="fa-regular fa-eye"></i></a></td>
@@ -75,6 +77,7 @@
                 <th>{{registro.data}}</th>
                 <td>{{registro.consumo}} KWh</td>
                 <td>{{registro.injecao}} KWh</td>
+                <!-- <td>{{registro.saldo_parcial}} KWh</td> -->
                 <td>{{registro.autor}}</td>
                 <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="btn btn-success rounded-5 btn-sm"><i
                             class="fa-regular fa-eye"></i></a></td>

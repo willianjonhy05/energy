@@ -24,7 +24,11 @@ class Registro(models.Model):
     injecao = models.IntegerField('103')
     oficial = models.BooleanField("Captado pela Distribuidora", default=False)
     casa = models.ForeignKey(Casa, verbose_name="Casa", on_delete=models.CASCADE, related_name="casas")
-    capacidade_maxima = models.IntegerField('Capacidade Máxima de Produção Solar', default=600)   
+    capacidade_maxima = models.IntegerField('Capacidade Máxima de Produção Solar', default=600)
+    
+    @property
+    def saldo_parcial(self):
+        return self.injecao - self.consumo
 
     def __str__(self):
         return self.data.strftime('%d/%m/%Y')
