@@ -52,9 +52,8 @@
                 <th>Deletar</th>
             </tr>
         </thead>
-        <tbody>
-            {% if registros %}
-            {% for registro in registros %}
+        <tbody>            
+            {% for registro in page_obj %}
             {% if registro.oficial == False %}
 
             <tr>
@@ -91,24 +90,7 @@
 </div>
 
 <div class="container">
-    {% if registros.has_other_pages %}
-    <div class="pagination">
-        {% if registros.has_previous %}
-        <a href="?page=1">&laquo; Primeira</a>
-        <a href="?page={{ registros.previous_page_number }}">Anterior</a>
-        {% endif %}
-
-        <span class="current">Página {{ registros.number }} de {{ registros.paginator.num_pages }}</span>
-
-        {% if registros.has_next %}
-        <a href="?page={{ registros.next_page_number }}">Próxima</a>
-        <a href="?page={{ registros.paginator.num_pages }}">Última &raquo;</a>
-        {% endif %}
-    </div>
-    {% endif %}
-    {% else %}
-    <p>Não há registros para exibir.</p>
-    {% endif %}
+    {% bootstrap_pagination page_obj %}
 </div>
 
 {% endblock %}

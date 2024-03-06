@@ -5,36 +5,70 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from gestao.models import Casa, Registro
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
 
+def grafico(request):
+    return render(request, 'grafico.html')
 
+# class HistoricoCasa(TemplateView):
+#     template_name = 'registro/historico1.html'
+#     registros_por_pagina = 5
 
-class HistoricoCasa(TemplateView):
+#     def get_context_data(self, casa_id, **kwargs):
+#         context = super().get_context_data(**kwargs)        
+#         casa = Casa.objects.get(pk=casa_id)
+#         registros = Registro.objects.filter(casa=casa).order_by('-data')
+#         paginator = Paginator(registros, self.registros_por_pagina)
+#         page = self.request.GET.get('page')
+
+#         try:
+#             registros_paginados = paginator.page(page)
+#         except PageNotAnInteger:
+#             registros_paginados = paginator.page(1)
+#         except EmptyPage:
+#             registros_paginados = paginator.page(paginator.num_pages)
+#         context['casa'] = casa
+#         context['registros'] = registros_paginados
+#         return context
+
+# class HistoricoCasa(ListView):
+#     template_name = 'registro/historico1.html'
+#     model = Registro
+#     ordering = '-data'
+#     paginate_by = 10
+
+#     def get_context_data(self, casa_id, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         casa = Casa.objects.get(pk=casa_id)
+#         registros = Registro.objects.filter(casa=casa).order_by('-data')
+#         context['registros'] = registros
+#         context['casa'] = casa
+#         return context
+    
+
+class HistoricoCasa(ListView):
     template_name = 'registro/historico1.html'
-    registros_por_pagina = 5
+    model = Registro
+    ordering = ['-data']
+    paginate_by = 10
 
-    def get_context_data(self, casa_id, **kwargs):
-        context = super().get_context_data(**kwargs)        
+    def get_queryset(self):
+        casa_id = self.kwargs.get('casa_id')
         casa = Casa.objects.get(pk=casa_id)
-        registros = Registro.objects.filter(casa=casa).order_by('-data')
-        paginator = Paginator(registros, self.registros_por_pagina)
-        page = self.request.GET.get('page')
+        queryset = Registro.objects.filter(casa=casa).order_by('-data')
+        return queryset
 
-        try:
-            registros_paginados = paginator.page(page)
-        except PageNotAnInteger:
-            registros_paginados = paginator.page(1)
-        except EmptyPage:
-            registros_paginados = paginator.page(paginator.num_pages)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        casa_id = self.kwargs.get('casa_id')
+        casa = Casa.objects.get(pk=casa_id)
         context['casa'] = casa
-        context['registros'] = registros_paginados
         return context
-
 
 class UserProfileView(LoginRequiredMixin, UpdateView):
     model = User
