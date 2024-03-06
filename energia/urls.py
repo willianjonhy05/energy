@@ -15,12 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import UserProfileView, Home, HistoricoCasa, Painel, grafico
+from .views import UserProfileView, Home, HistoricoCasa, Painel, grafico, RegistrationView
 from gestao.views import NovaCasa, Casas, ApagarCasa, AtualizarCasa, DetalharCasa, NovoRegistro, Registros, DetalharRegistro, AtualizarRegistro, ApagarRegistro, NovoRegistroDaCasa
 
 urlpatterns = [
@@ -33,6 +33,8 @@ urlpatterns = [
     path('painel/<int:casa_id>/', Painel.as_view(), name='painel'),
     path('adicionar-registro/<int:casa_id>', NovoRegistroDaCasa, name='registrar-registro'),
     path('grafico/', grafico, name='registrar-registro'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/registration', RegistrationView.as_view(), name='registration'),
 
     # ---------- URLs relacionadas à classe Casa ---------------
 

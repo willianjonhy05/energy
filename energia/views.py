@@ -1,19 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
+from django.contrib import messages
 from gestao.models import Casa, Registro
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from gestao.forms import RegistrationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-
-def grafico(request):
-    return render(request, 'grafico.html')
 
 # class HistoricoCasa(TemplateView):
 #     template_name = 'registro/historico1.html'
@@ -51,7 +51,7 @@ def grafico(request):
 #         return context
     
 
-class HistoricoCasa(ListView):
+class HistoricoCasa(LoginRequiredMixin, ListView):
     template_name = 'registro/historico1.html'
     model = Registro
     ordering = ['-data']
@@ -84,6 +84,15 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
         update_session_auth_hash(self.request, self.object)
         return response
     
+class RegistrationView(CreateView):
+    template_name = "registration/registration.html"
+    model = get_user_model()
+    form_class = RegistrationForm
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, "Cadastro realizado com sucesso!")
+        return reverse('home')
+    
 
 class Home(TemplateView):
     template_name = 'home.html'
@@ -93,7 +102,7 @@ class Home(TemplateView):
         context["casas"] = Casa.objects.all()[:1]
         return context
 
-class Painel(TemplateView):
+class Painel(LoginRequiredMixin, TemplateView):
     template_name = 'painel.html'
 
     def get_context_data(self, casa_id, **kwargs):
@@ -124,3 +133,8 @@ class Painel(TemplateView):
         context['media_producao_diaria'] = media_producao_diaria
         context['media_consumo_diario'] = media_consumo_diario
         return context
+    
+
+@login_required
+def grafico(request):
+    return render(request, 'grafico.html')

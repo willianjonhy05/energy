@@ -1,0 +1,9 @@
+.destaque {
+    background-image: url('/static/img/solar-painel.svg');
+    background-position: center;
+    background-size: cover;
+    opacity: 5.0;
+    /* background-image-filter: blur(5px); */
+    /* filter: brightness(120%) saturate(100%) hue-rotate(45deg); */
+    /* z-index: -1; */
+}

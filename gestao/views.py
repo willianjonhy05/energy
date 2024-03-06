@@ -4,11 +4,13 @@ from .forms import CasaForm, RegistroForm, RegistroFormCasa, AtualizarRegistro
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView, View
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 # ---------- Views relacionadas à classe Casa ---------------
 
-class NovaCasa(CreateView):
+class NovaCasa(LoginRequiredMixin, CreateView):
     model = Casa
     template_name = 'casa/cadastrar.html'
     form_class = CasaForm
@@ -22,7 +24,7 @@ class Casas(ListView):
     template_name='casa/listar.html'
     context_object_name = 'casas'
 
-class ApagarCasa(DeleteView):
+class ApagarCasa(LoginRequiredMixin, DeleteView):
     model = Casa
     template_name = 'casa/apagar.html'       
 
@@ -30,7 +32,7 @@ class ApagarCasa(DeleteView):
         messages.add_message(self.request, messages.SUCCESS, "Casa apagada com sucesso!")
         return reverse('casas')
 
-class AtualizarCasa(UpdateView):
+class AtualizarCasa(LoginRequiredMixin, UpdateView):
     model = Casa
     template_name = 'casa/atualizar.html'
     form_class = CasaForm
@@ -44,6 +46,8 @@ class DetalharCasa(DetailView):
     template_name = 'casa/detalhar.html'
     context_object_name = 'casa'
 
+
+@login_required
 def NovoRegistroDaCasa(request, casa_id):
     casa = Casa.objects.get(pk=casa_id)
     if request.method == 'POST':
@@ -52,14 +56,14 @@ def NovoRegistroDaCasa(request, casa_id):
             registro = form.save(commit=False)
             registro.casa = casa
             registro.save()
-            return redirect('historico', casa_id=casa.pk)  # Redirecione para a página de sucesso após a criação do registro
+            return redirect('historico', casa_id=casa.pk) 
     else:
         form = RegistroFormCasa(initial={'casa': casa})
     return render(request, 'casa/novo_registro.html', {'form': form})
 
 # ---------- Views relacionadas à classe Registro ---------------
     
-class NovoRegistro(CreateView):
+class NovoRegistro(LoginRequiredMixin, CreateView):
     model = Registro
     template_name = 'registro/cadastrar.html'
     form_class = RegistroForm
@@ -74,7 +78,7 @@ class Registros(ListView):
     context_object_name = 'registros'
     ordering = '-data'
 
-class ApagarRegistro(DeleteView):
+class ApagarRegistro(LoginRequiredMixin, DeleteView):
     model = Registro
     template_name = 'registro/apagar.html'       
 
@@ -82,7 +86,7 @@ class ApagarRegistro(DeleteView):
         messages.add_message(self.request, messages.SUCCESS, "Registro apagado com sucesso!")
         return reverse('casas')
 
-class AtualizarRegistro(UpdateView):
+class AtualizarRegistro(LoginRequiredMixin, UpdateView):
     model = Registro
     template_name = 'registro/atualizar.html'
     form_class = AtualizarRegistro
