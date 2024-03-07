@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, DetailView
 from django.contrib import messages
 from gestao.models import Casa, Registro
 from gestao.forms import RegistrationForm
@@ -70,19 +70,11 @@ class HistoricoCasa(LoginRequiredMixin, ListView):
         context['casa'] = casa
         return context
 
-class UserProfileView(LoginRequiredMixin, UpdateView):
+class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'registration/profile.html'
-    form_class = UserChangeForm
-    success_url = reverse_lazy('profile')
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        update_session_auth_hash(self.request, self.object)
-        return response
+    context_object_name = 'user'
+    
     
 class RegistrationView(CreateView):
     template_name = "registration/registration.html"

@@ -28,7 +28,7 @@ urlpatterns = [
     path('', Home.as_view(), name='home'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
-    path('profile/', UserProfileView.as_view(), name='profile'),
+    path('profile/<int:pk>', UserProfileView.as_view(), name='profile'),
     path('historico_casa/<int:casa_id>/', HistoricoCasa.as_view(), name='historico'),
     path('painel/<int:casa_id>/', Painel.as_view(), name='painel'),
     path('adicionar-registro/<int:casa_id>', NovoRegistroDaCasa, name='registrar-registro'),

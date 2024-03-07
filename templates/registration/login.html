@@ -9,14 +9,50 @@
 {% block conteudo %}
 
 
-<div class="container mt-3">
+<!-- <div class="container mt-3">
     <h2>Login</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
         <button class="btn btn-primary" type="submit">Login</button>
     </form>
-</div>
+</div> -->
+
+
+<div class="container col-xl-10 col-xxl-8 px-3 py-3">
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">A gestão de energia da sua casa mais fácil</h1>
+        <p class="col-lg-10 fs-4">Cadastre seus imóveis e suas informações de consumo e produção de energia solar e saiba de forma fácil seus gastos e investimentos.</p>
+      </div>
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form method="post" enctype="multipart/form-data" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="w-100 btn btn-lg btn-warning" type="submit">Login</button>
+        <hr class="my-4">
+          <small class="text-body-secondary">Caso ainda não seja cadastrado, <a href="{% url 'registration' %}">clique aqui</a> e crie logo sua conta e aproveite os benefícios</small>
+        </form>
+        <!-- <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="Digite o seu nome de usuário">
+            <label for="floatingInput">Usuário</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Senha</label>
+          </div>
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+          <button class="w-100 btn btn-lg btn-warning" type="submit">Login</button>
+
+        </form> -->
+      </div>
+    </div>
+  </div>
 
 
 {% endblock %}
