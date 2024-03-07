@@ -19,6 +19,10 @@ class AtualizarUsuario(UpdateView):
         return reverse('home')
 
 
+class Perfil(DetailView):
+    model = Usuario
+    template_name = 'usuario/detalhar.html'
+    context_object_name = 'usuario'
 
 
 
