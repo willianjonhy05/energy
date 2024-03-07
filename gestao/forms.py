@@ -1,4 +1,4 @@
-from .models import Casa, Registro
+from .models import Casa, Registro, Usuario
 from django.forms import ModelForm, EmailField, CharField
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
@@ -7,6 +7,11 @@ from django.contrib.auth import get_user_model
 class CasaForm(ModelForm):
     class Meta:
         model = Casa
+        fields = '__all__'
+
+class UsuarioForm(ModelForm):
+    class Meta:
+        model = Usuario
         fields = '__all__'
 
 class RegistroForm(ModelForm):

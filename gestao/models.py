@@ -1,4 +1,26 @@
 from django.db import models
+from datetime import date
+from django.contrib.auth import get_user_model
+
+class Usuario(models.Model):
+    nome = models.CharField('Nome', max_length=255)
+    data_nasc = models.DateField('Data de Nascimento', null=True, blank=True)
+    email = models.EmailField('E-mail')
+    telefone = models.CharField("Telefone", max_length=15, null=True, blank=True)
+    user = models.OneToOneField(get_user_model(), verbose_name="Usuário",on_delete=models.CASCADE, null=True, blank=True, related_name="autor")
+
+    @property
+    def idade(self):
+        hoje = date.today()
+        diferenca = hoje - self.data_nasc
+        return round(diferenca.days // 365.25)    
+
+    def __str__(self):
+       return self.nome
+    
+    class Meta:
+        verbose_name = "Usuario"
+        verbose_name_plural = "Usuarios"    
 
 class Casa(models.Model):
     rua = models.CharField('Rua', max_length=255, blank=True, null=True)

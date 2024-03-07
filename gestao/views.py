@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Casa, Registro
-from .forms import CasaForm, RegistroForm, RegistroFormCasa, AtualizarRegistro
+from .models import Casa, Registro, Usuario
+from .forms import CasaForm, RegistroForm, RegistroFormCasa, AtualizarRegistro, UsuarioForm
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView, View
 from django.contrib import messages
 from django.urls import reverse
@@ -8,6 +8,20 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+# ---------- Views relacionadas à classe Registro ---------------
+class AtualizarUsuario(UpdateView):    
+    model = Usuario
+    template_name = 'usuario/atualizar.html'
+    form_class = UsuarioForm
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, "Usuário atualizado com sucesso!")
+        return reverse('home')
+
+
+
+
+
 # ---------- Views relacionadas à classe Casa ---------------
 
 class NovaCasa(LoginRequiredMixin, CreateView):
