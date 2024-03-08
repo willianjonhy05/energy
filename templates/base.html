@@ -58,10 +58,14 @@
                     <div class="text-end">
                         {% if user.is_authenticated %}
                         <div class="dropdown text-end">
-                            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle seta-branca"
+                            <a href="#"
+                                class="d-block link-body-emphasis text-decoration-none dropdown-toggle seta-branca"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="/static/img/user.png" alt="mdo" width="40" height="40"
-                                    class="rounded-circle">
+                                {% if user.usuario.foto %}
+                                <img src="{{ user.usuario.foto.url }}" alt="mdo" width="40" height="40" class="rounded-circle">
+                                {% else %}
+                                <img src="/static/img/user.png" alt="mdo" width="40" height="40" class="rounded-circle">
+                                {% endif %}
                             </a>
                             <ul class="dropdown-menu text-small">
                                 <li><a class="dropdown-item" href="#">Registrar</a></li>
@@ -72,7 +76,7 @@
                                 </li>
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
                             </ul>
-                        </div>                        
+                        </div>
                         {% else %}
                         <!-- <button type="button" class="btn btn-outline-light me-2">Login</button> -->
                         <a class="btn btn-outline-light me-2" href="{% url 'login' %}">Login</a>

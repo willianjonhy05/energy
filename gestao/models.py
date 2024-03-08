@@ -5,8 +5,10 @@ from django.contrib.auth import get_user_model
 class Usuario(models.Model):
     nome = models.CharField('Nome', max_length=255)
     data_nasc = models.DateField('Data de Nascimento', null=True, blank=True)
+    foto = models.ImageField("Foto", upload_to='avatares', blank=True, null=True)
     email = models.EmailField('E-mail')
     telefone = models.CharField("Telefone", max_length=15, null=True, blank=True)
+    cpf = models.CharField("CPF", max_length=15, null=True, blank=True)
     user = models.OneToOneField(get_user_model(), verbose_name="Usuário",on_delete=models.CASCADE, null=True, blank=True, related_name="autor")
 
     @property
