@@ -91,13 +91,16 @@ class RegistrationView(CreateView):
         return reverse('home')
     
 
-class Home(LoginRequiredMixin, TemplateView):
+class Home(TemplateView):
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        usuario = self.request.user.usuario
-        context["casas"] = Casa.objects.filter(proprietario=usuario)[:1]
+        if self.request.user.is_authenticated:
+            usuario = self.request.user.usuario
+            context["casas"] = Casa.objects.filter(proprietario=usuario)[:1]
+            casas_count = Casa.objects.filter(proprietario=usuario).count()
+            context["casas_count"] = casas_count
         return context
 
 class Painel(LoginRequiredMixin, TemplateView):

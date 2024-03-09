@@ -43,11 +43,16 @@
                             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'sobre' %}">Quem Somos</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
                             <a class="nav-link active" href="{% url 'cadastrar-registro' %}">Registrar Dados</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="{% url 'casas' %}">Imóveis</a>
-                        </li>
+                        </li>                        
+                        {% endif %}
 
                     </ul>
                     <form class="d-flex mx-3" role="search">
@@ -169,13 +174,18 @@
     <div class="container">
         <footer class="py-3 my-4" id="footer">
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+                <li class="nav-item"><a href="{% url 'home' %}" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="{% url 'sobre' %}" class="nav-link px-2 text-body-secondary">Quem Somos</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a href="{% url 'casas' %}" class="nav-link px-2 text-body-secondary">Meus Imóveis</a></li>
+                <li class="nav-item"><a href="{% url 'cadastrar-registro' %}" class="nav-link px-2 text-body-secondary">Registrar Dados</a></li>
+                {% else %} 
+                <li class="nav-item"><a href="{% url 'login' %}" class="nav-link px-2 text-body-secondary">Login</a></li> 
+                <li class="nav-item"><a href="{% url 'registration' %}" class="nav-link px-2 text-body-secondary">Cadastre-se</a></li> 
+                {% endif %}              
             </ul>
-            <p class="text-center text-body-secondary">&copy; 2024 Company, Inc</p>
+            <p class="text-center text-body-secondary">&copy; Desenvolvido por William Sousa  com as tecnologias em
+                Python/Django, Javascript e Bootstrap</p>
         </footer>
     </div>
 

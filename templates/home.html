@@ -15,10 +15,16 @@
         <div class="container-fluid py-5">
             <h1 class="display-5 fw-bold text-white">Acompanhe o Painel Administrativo</h1>
             <p class="col-md-8 fs-4 text-white">Confira número brevemente compilados acerca da produção de energia elétrica solar injetada e consumo do seu domicílio a partir dos registros enviados pelo seu usuário nos últimos dias.</p>
-            <!-- <button class="btn btn-primary btn-lg" type="button">Example button</button> -->
+            
             {% for casa in casas %}
             <a class="btn btn-custom btn-lg" href="{% url 'painel' casa_id=casa.pk %}">Casa {{casa.numero}}</a>
             {% endfor %}
+            {% if user.is_authenticated %}
+            {% if casas_count == 0 %} 
+            <a class="btn btn-lg btn-custom" href="{% url 'cadastrar-casa' %}">Cadastrar Casa</a>
+            {% endif %}  
+            {% endif %}  
+
         </div>
     </div>
 <div class="row align-items-md-stretch mt-3">
@@ -26,16 +32,23 @@
         <div class="h-100 p-5 text-bg-dark rounded-3">
             <h2>Adicione seus registros</h2>
             <p>Cadastre agora os registros detalhados de consumo e injeção de energia elétrica provenientes de sua residência, assegurando o controle e a gestão eficiente de seus dados energéticos.</p>
-            <!-- <button class="btn btn-outline-light" type="button">Registrar dados</button> -->
+            
+            {% if user.is_authenticated %}   
+            {% if casas_count == 0 %}             
+
+            {% else %}
             <a class="btn btn-outline-light" href="{% url 'cadastrar-registro' %}">Registrar dados</a>
+            {% endif %}            
+            {% endif %}
         </div>
     </div>
     <div class="col-md-6">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
             <h2>Registre seu imóvel</h2>
             <p>Tenha total controle sobre o consumo e a produção de energia elétrica em sua residência. Registre seus imóveis e forneça informações sobre suas produções e consumos energéticos.</p>
+            {% if user.is_authenticated %}
             <a class="btn btn-outline-secondary" href="{% url 'cadastrar-casa' %}">Inscrever</a>
-            <!-- <button class="btn btn-outline-secondary" type="button">Example button</button> -->
+            {% endif %}            
             
         </div>
     </div>
