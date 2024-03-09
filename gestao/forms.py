@@ -7,7 +7,11 @@ from django.contrib.auth import get_user_model
 class CasaForm(ModelForm):
     class Meta:
         model = Casa
-        fields = '__all__'
+        fields = ['rua', 'numero', 'bairro', 'cep', 'contrato']
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['proprietario'].widget.attrs['style'] = 'display: none;'
 
 class UsuarioForm(ModelForm):
     class Meta:

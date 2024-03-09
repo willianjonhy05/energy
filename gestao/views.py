@@ -1,3 +1,6 @@
+from typing import Any
+from django.db.models.query import QuerySet
+from django.forms import BaseModelForm
 from django.shortcuts import render, redirect
 from .models import Casa, Registro, Usuario
 from .forms import CasaForm, RegistroForm, RegistroFormCasa, AtualizarRegistro, UsuarioForm
@@ -9,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 # ---------- Views relacionadas à classe Registro ---------------
-class AtualizarUsuario(UpdateView):    
+class AtualizarUsuario(LoginRequiredMixin, UpdateView):    
     model = Usuario
     template_name = 'usuario/atualizar.html'
     form_class = UsuarioForm
@@ -19,12 +22,12 @@ class AtualizarUsuario(UpdateView):
         return reverse('perfil')
 
 
-class Perfil(DetailView):
+class Perfil(LoginRequiredMixin, DetailView):
     model = Usuario
     template_name = 'usuario/detalhar.html'
     context_object_name = 'usuario'
 
-class PerfilAutor(TemplateView):
+class PerfilAutor(LoginRequiredMixin, TemplateView):
     template_name='perfil.html'    
 
 
@@ -40,10 +43,23 @@ class NovaCasa(LoginRequiredMixin, CreateView):
         messages.add_message(self.request, messages.SUCCESS, "Casa cadastrada com sucesso!")
         return reverse('home')
     
-class Casas(ListView):
+    def form_valid(self, form):
+        form.instance.proprietario = self.request.user.usuario
+        return super().form_valid(form)
+    
+    # def form_valid(self, form):
+    #     form.instance.proprietario = self.request.user.usuario
+    #     return super().form_valid(form)
+    
+class Casas(LoginRequiredMixin, ListView):
     model = Casa
     template_name='casa/listar.html'
     context_object_name = 'casas'
+
+    def get_queryset(self):
+        usuario = self.request.user.usuario
+        queryset = Casa.objects.filter(proprietario=usuario)
+        return queryset
 
 class ApagarCasa(LoginRequiredMixin, DeleteView):
     model = Casa
@@ -62,7 +78,7 @@ class AtualizarCasa(LoginRequiredMixin, UpdateView):
         messages.add_message(self.request, messages.SUCCESS, "Casa atualizada com sucesso!")
         return reverse('detalhar-casa', kwargs={'pk': self.object.pk})
 
-class DetalharCasa(DetailView):
+class DetalharCasa(LoginRequiredMixin, DetailView):
     model = Casa
     template_name = 'casa/detalhar.html'
     context_object_name = 'casa'
@@ -93,7 +109,13 @@ class NovoRegistro(LoginRequiredMixin, CreateView):
         messages.add_message(self.request, messages.SUCCESS, "Registro cadastrado com sucesso!")
         return reverse('home')
     
-class Registros(ListView):
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        usuario = self.request.user.usuario
+        form.fields['casa'].queryset = form.fields['casa'].queryset.filter(proprietario=usuario)
+        return form
+    
+class Registros(LoginRequiredMixin, ListView):
     model = Registro
     template_name='registro/listar.html'
     context_object_name = 'registros'
@@ -116,7 +138,7 @@ class AtualizarRegistro(LoginRequiredMixin, UpdateView):
         messages.add_message(self.request, messages.SUCCESS, "Registro atualizado com sucesso!")
         return reverse('detalhar-registro', kwargs={'pk': self.object.pk})
 
-class DetalharRegistro(DetailView):
+class DetalharRegistro(LoginRequiredMixin, DetailView):
     model = Registro
     template_name = 'registro/detalhar.html'
     context_object_name = 'registro'
