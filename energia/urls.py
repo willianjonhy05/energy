@@ -20,13 +20,14 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import LandingPage
+from .views import LandingPage, Sobre
 from .views import UserProfileView, Home, HistoricoCasa, Painel, grafico, RegistrationView
 from gestao.views import NovaCasa, Casas, ApagarCasa, AtualizarCasa, DetalharCasa, NovoRegistro, Registros, DetalharRegistro, AtualizarRegistro, ApagarRegistro, NovoRegistroDaCasa
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('energia/', Home.as_view(), name='home'),
+    path('quem-somos/', Sobre.as_view(), name='sobre'),
     path('', LandingPage.as_view(), name='lp'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),

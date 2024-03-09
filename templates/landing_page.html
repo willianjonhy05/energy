@@ -1,3 +1,4 @@
+{% load static bootstrap5 %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -24,8 +25,8 @@
             <header class="p-3">
                 <div class="container">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                            <img class="logo" src="/static/img/energia.png" alt="" width="70">
+                        <a href="{% url 'sobre' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                            <img class="logo" src="/static/img/energia.png" alt="Clique e conheça mais sobre nossa plataforma" width="70">
                         </a>
                         <div class="ms-auto">
                             <a href="{% url 'login' %}" class="btn btn-custom ">Login</a>

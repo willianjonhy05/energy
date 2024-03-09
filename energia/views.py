@@ -17,6 +17,8 @@ from django.contrib.auth.decorators import login_required
 class LandingPage(TemplateView):
     template_name = 'landing_page.html'
 
+class Sobre(TemplateView):
+    template_name = 'quem-somos.html'
 
 # class HistoricoCasa(TemplateView):
 #     template_name = 'registro/historico1.html'
