@@ -31,7 +31,7 @@ class Casa(models.Model):
     cep = models.CharField('CEP', max_length=9, blank=True, null=True)
     titular = models.CharField('Titular da Casa', max_length=100)
     contrato = models.CharField('Contrato com Distribuidora', max_length=20, blank=True, null=True)
-   
+    proprietario = models.ForeignKey(Usuario, on_delete=models.CASCADE, verbose_name="Titular", related_name="titular", blank=True, null=True)   
 
     def __str__(self):
        return f"Casa {self.numero}"
