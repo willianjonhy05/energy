@@ -20,9 +20,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import LandingPage, Sobre
+from .views import LandingPage, Sobre  
 from .views import UserProfileView, Home, HistoricoCasa, Painel, grafico, RegistrationView
 from gestao.views import NovaCasa, Casas, ApagarCasa, AtualizarCasa, DetalharCasa, NovoRegistro, Registros, DetalharRegistro, AtualizarRegistro, ApagarRegistro, NovoRegistroDaCasa
+from gestao.views import Perfil, PerfilAutor
+
+
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
@@ -55,6 +58,10 @@ urlpatterns = [
     path('detalhar_registro/<int:pk>/', DetalharRegistro.as_view(), name='detalhar-registro'),
     path('atualizar_registro/<int:pk>/', AtualizarRegistro.as_view(), name='atualizar-registro'),
     path('apagar_registro/<int:pk>/', ApagarRegistro.as_view(), name='apagar-registro'),
+
+    # ---------- URLs relacionadas à classe Usuario ---------------
+    path('detalhar_usuario/<int:pk>/', Perfil.as_view(), name='perfil1'),
+    path('perfil/', PerfilAutor.as_view(), name='perfil'),
 ]
 
 

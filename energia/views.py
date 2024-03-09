@@ -7,7 +7,7 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 from django.contrib import messages
-from gestao.models import Casa, Registro
+from gestao.models import Casa, Registro, Usuario
 from gestao.forms import RegistrationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -76,9 +76,9 @@ class HistoricoCasa(LoginRequiredMixin, ListView):
         return context
 
 class UserProfileView(LoginRequiredMixin, DetailView):
-    model = User
+    model = Usuario
     template_name = 'registration/profile.html'
-    context_object_name = 'user'
+    context_object_name = 'usuario'
     
     
 class RegistrationView(CreateView):
@@ -111,7 +111,7 @@ class Painel(LoginRequiredMixin, TemplateView):
         diferenca_consumo = registro_recente.consumo - registro_oficial_recente.consumo
         ultima_data = registro_recente.data
         ultima_data_oficial = registro_oficial_recente.data
-        dias = abs(ultima_data_oficial.day - ultima_data.day)        
+        dias = abs((ultima_data_oficial - ultima_data).days)        
         diferenca_injecao = registro_recente.injecao - registro_oficial_recente.injecao
         media_producao_diaria = diferenca_injecao // dias
         saldo = diferenca_injecao - diferenca_consumo
@@ -129,6 +129,7 @@ class Painel(LoginRequiredMixin, TemplateView):
         context['prod_maxima'] = prod_maxima   
         context['media_producao_diaria'] = media_producao_diaria
         context['media_consumo_diario'] = media_consumo_diario
+        context['dias'] = dias
         return context
     
 

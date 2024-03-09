@@ -9,7 +9,7 @@ class Usuario(models.Model):
     email = models.EmailField('E-mail')
     telefone = models.CharField("Telefone", max_length=15, null=True, blank=True)
     cpf = models.CharField("CPF", max_length=15, null=True, blank=True)
-    user = models.OneToOneField(get_user_model(), verbose_name="Usuário",on_delete=models.CASCADE, null=True, blank=True, related_name="autor")
+    user = models.OneToOneField(get_user_model(), verbose_name="Usuário",on_delete=models.CASCADE, null=True, blank=True, related_name="usuario")
 
     @property
     def idade(self):

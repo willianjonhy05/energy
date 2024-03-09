@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Casa, Registro, Usuario
 from .forms import CasaForm, RegistroForm, RegistroFormCasa, AtualizarRegistro, UsuarioForm
-from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView, View
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView, TemplateView
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -23,6 +23,9 @@ class Perfil(DetailView):
     model = Usuario
     template_name = 'usuario/detalhar.html'
     context_object_name = 'usuario'
+
+class PerfilAutor(TemplateView):
+    template_name='perfil.html'    
 
 
 
