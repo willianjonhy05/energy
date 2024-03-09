@@ -23,7 +23,7 @@ from django.conf import settings
 from .views import LandingPage, Sobre  
 from .views import UserProfileView, Home, HistoricoCasa, Painel, grafico, RegistrationView
 from gestao.views import NovaCasa, Casas, ApagarCasa, AtualizarCasa, DetalharCasa, NovoRegistro, Registros, DetalharRegistro, AtualizarRegistro, ApagarRegistro, NovoRegistroDaCasa
-from gestao.views import Perfil, PerfilAutor
+from gestao.views import Perfil, PerfilAutor, AtualizarUsuario
 
 
 
@@ -62,6 +62,7 @@ urlpatterns = [
     # ---------- URLs relacionadas à classe Usuario ---------------
     path('detalhar_usuario/<int:pk>/', Perfil.as_view(), name='perfil1'),
     path('perfil/', PerfilAutor.as_view(), name='perfil'),
+    path('atualizar_usuario/<int:pk>/', AtualizarUsuario.as_view(), name='atualizar-usuario'),
 ]
 
 

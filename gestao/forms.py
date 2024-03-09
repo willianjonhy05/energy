@@ -12,7 +12,7 @@ class CasaForm(ModelForm):
 class UsuarioForm(ModelForm):
     class Meta:
         model = Usuario
-        fields = '__all__'
+        fields = ['data_nasc', 'foto', 'telefone', 'cpf']
 
 class RegistroForm(ModelForm):
     class Meta:

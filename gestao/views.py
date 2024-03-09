@@ -16,7 +16,7 @@ class AtualizarUsuario(UpdateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, "Usuário atualizado com sucesso!")
-        return reverse('home')
+        return reverse('perfil')
 
 
 class Perfil(DetailView):
