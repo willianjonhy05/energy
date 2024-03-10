@@ -2,7 +2,9 @@
 {% load static bootstrap5 %}
 
 {% block css %} {% endblock %}
-{% block js %} {% endblock %}
+{% block js %}
+<script defer src="/static/js/print.js"></script>
+{% endblock %}
 {% block title %}Registros{% endblock %}
 
 
@@ -30,7 +32,9 @@
 </div>
 
 <div class="container">
+    
     <h2>Detalhes do Registro</h2>
+    <button class="btn btn-primary rounded-circle p-2 lh-1" id="btnPrint"><i class="fa-solid fa-print"></i></button>
     <hr>
     <h3>Informações da Casa</h3>
     <p><strong>Rua:</strong> {{ casa.rua }}</p>
