@@ -53,13 +53,19 @@ class NovaCasa(LoginRequiredMixin, CreateView):
     
 class Casas(LoginRequiredMixin, ListView):
     model = Casa
-    template_name='casa/listar.html'
+    template_name='casa/listar_casas.html'
     context_object_name = 'casas'
 
     def get_queryset(self):
         usuario = self.request.user.usuario
         queryset = Casa.objects.filter(proprietario=usuario)
         return queryset
+    
+
+class TodasCasas(LoginRequiredMixin, ListView):
+    model = Casa
+    template_name='casa/listar.html'
+    context_object_name = 'casas'
 
 class ApagarCasa(LoginRequiredMixin, DeleteView):
     model = Casa

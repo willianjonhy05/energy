@@ -1,9 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth.forms import UserChangeForm
-from django.contrib.auth import update_session_auth_hash
-from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 from django.contrib import messages
@@ -19,42 +15,6 @@ class LandingPage(TemplateView):
 
 class Sobre(TemplateView):
     template_name = 'quem-somos.html'
-
-# class HistoricoCasa(TemplateView):
-#     template_name = 'registro/historico1.html'
-#     registros_por_pagina = 5
-
-#     def get_context_data(self, casa_id, **kwargs):
-#         context = super().get_context_data(**kwargs)        
-#         casa = Casa.objects.get(pk=casa_id)
-#         registros = Registro.objects.filter(casa=casa).order_by('-data')
-#         paginator = Paginator(registros, self.registros_por_pagina)
-#         page = self.request.GET.get('page')
-
-#         try:
-#             registros_paginados = paginator.page(page)
-#         except PageNotAnInteger:
-#             registros_paginados = paginator.page(1)
-#         except EmptyPage:
-#             registros_paginados = paginator.page(paginator.num_pages)
-#         context['casa'] = casa
-#         context['registros'] = registros_paginados
-#         return context
-
-# class HistoricoCasa(ListView):
-#     template_name = 'registro/historico1.html'
-#     model = Registro
-#     ordering = '-data'
-#     paginate_by = 10
-
-#     def get_context_data(self, casa_id, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         casa = Casa.objects.get(pk=casa_id)
-#         registros = Registro.objects.filter(casa=casa).order_by('-data')
-#         context['registros'] = registros
-#         context['casa'] = casa
-#         return context
-    
 
 class HistoricoCasa(LoginRequiredMixin, ListView):
     template_name = 'registro/historico1.html'
@@ -97,10 +57,14 @@ class Home(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            usuario = self.request.user.usuario
-            context["casas"] = Casa.objects.filter(proprietario=usuario)[:1]
-            casas_count = Casa.objects.filter(proprietario=usuario).count()
-            context["casas_count"] = casas_count
+            if self.request.user.is_superuser:
+                context["msg"] = "Bem-vindo, Administrador!"
+            else:
+                usuario = self.request.user.usuario
+                context["msg"] = "Bem-vindo, ao nosso sistema administrativo!"
+                context["casas"] = Casa.objects.filter(proprietario=usuario)[:1]
+                casas_count = Casa.objects.filter(proprietario=usuario).count()
+                context["casas_count"] = casas_count
         return context
 
 class Painel(LoginRequiredMixin, TemplateView):
