@@ -53,7 +53,7 @@ class NovaCasa(LoginRequiredMixin, CreateView):
     
 class Casas(LoginRequiredMixin, ListView):
     model = Casa
-    template_name='casa/listar_casas.html'
+    template_name='casa/listar.html'
     context_object_name = 'casas'
 
     def get_queryset(self):
@@ -64,7 +64,7 @@ class Casas(LoginRequiredMixin, ListView):
 
 class TodasCasas(LoginRequiredMixin, ListView):
     model = Casa
-    template_name='casa/listar.html'
+    template_name='adm/listar_casas.html'
     context_object_name = 'casas'
 
 class ApagarCasa(LoginRequiredMixin, DeleteView):
