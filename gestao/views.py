@@ -1,6 +1,4 @@
-from typing import Any
-from django.db.models.query import QuerySet
-from django.forms import BaseModelForm
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from .models import Casa, Registro, Usuario
 from .forms import CasaForm, RegistroForm, RegistroFormCasa, AtualizarRegistro, UsuarioForm
@@ -9,6 +7,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 # ---------- Views relacionadas à classe Registro ---------------
@@ -61,11 +60,19 @@ class Casas(LoginRequiredMixin, ListView):
         queryset = Casa.objects.filter(proprietario=usuario)
         return queryset
     
+@user_passes_test(lambda u: u.is_superuser)
+def is_superuser(user):
+    return user.is_superuser
 
 class TodasCasas(LoginRequiredMixin, ListView):
     model = Casa
     template_name='adm/listar_casas.html'
     context_object_name = 'casas'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_superuser:            
+            return render(request, 'adm/acesso-negado.html')
+        return super().dispatch(request, *args, **kwargs)
 
 class ApagarCasa(LoginRequiredMixin, DeleteView):
     model = Casa
