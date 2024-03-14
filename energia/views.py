@@ -7,6 +7,9 @@ from gestao.models import Casa, Registro, Usuario
 from gestao.forms import RegistrationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+
 
 # Create your views here.
 
@@ -34,6 +37,22 @@ class HistoricoCasa(LoginRequiredMixin, ListView):
         casa = Casa.objects.get(pk=casa_id)
         context['casa'] = casa
         return context
+    
+def DocumentCasa(request, casa_id):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=historico.pdf'
+    p = canvas.Canvas(response)
+    casa = Casa.objects.get(pk=casa_id)
+    registros = Registro.objects.filter(casa=casa).order_by('-data')
+    p.drawString(100, 800, f"Histórico da Casa: {casa.numero}")
+    y = 780
+    for registro in registros:
+        y -= 20
+        data_formatada = registro.data.strftime('%d/%m/%Y') 
+        p.drawString(100, y, f"Data: {data_formatada}| Autor: {registro.autor}| Consumo: {registro.consumo}| Produção: {registro.injecao}")
+    p.showPage()
+    p.save()
+    return response
 
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = Usuario

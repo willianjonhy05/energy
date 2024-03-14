@@ -20,7 +20,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import LandingPage, Sobre  
+from .views import LandingPage, Sobre, DocumentCasa  
 from .views import UserProfileView, Home, HistoricoCasa, Painel, grafico, RegistrationView
 from gestao.views import NovaCasa, Casas, ApagarCasa, AtualizarCasa, DetalharCasa, NovoRegistro, Registros, DetalharRegistro, AtualizarRegistro, ApagarRegistro, NovoRegistroDaCasa
 from gestao.views import Perfil, PerfilAutor, AtualizarUsuario, TodasCasas
@@ -66,6 +66,9 @@ urlpatterns = [
 
     # ---------- URLs relacionadas à classe Usuario ---------------
     path('todas-casas/', TodasCasas.as_view(), name='todas-casas'),
+    
+    # ---------- Gerando PDF de dados ---------------
+    path('historico/<int:casa_id>/pdf/', DocumentCasa, name='historico_casa_pdf'),
 ]
 
 
