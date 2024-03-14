@@ -11,7 +11,7 @@
 {% block conteudo %}
 
 
-<div class="container my-3">
+<div class="no-print container my-3">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-custom overflow-hidden text-center bg-body-tertiary border rounded-3">
             <li class="breadcrumb-item p-2">
@@ -52,9 +52,9 @@
                 <th>Injeção</th>
                 <!-- <th>Saldo</th> -->
                 <th>Autor do Registro</th>
-                <th>Oficial</th>
-                <th>Atualizar</th>
-                <th>Deletar</th>
+                <th class="no-print">Detalhar</th>
+                <th class="no-print">Atualizar</th>
+                <th class="no-print">Deletar</th>
             </tr>
         </thead>
         <tbody>            
@@ -67,11 +67,11 @@
                 <td>{{registro.injecao}} KWh</td>
                 <!-- <td>{{registro.saldo_parcial}} KWh</td> -->
                 <td>{{registro.autor}}</td>
-                <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="btn btn-success rounded-5 btn-sm"><i
+                <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="no-print btn btn-success rounded-5 btn-sm"><i
                             class="fa-regular fa-eye"></i></a></td>
-                <td><a href="{% url 'atualizar-registro' pk=registro.pk %}" class="btn btn-primary rounded-5 btn-sm"><i
+                <td><a href="{% url 'atualizar-registro' pk=registro.pk %}" class="no-print btn btn-primary rounded-5 btn-sm"><i
                             class="fa-solid fa-rotate"></i></a></td>
-                <td><a href="{% url 'apagar-registro' pk=registro.pk %}" class="btn btn-danger rounded-5 btn-sm"><i
+                <td><a href="{% url 'apagar-registro' pk=registro.pk %}" class="no-print btn btn-danger rounded-5 btn-sm"><i
                             class="fa-solid fa-trash-can"></i></a></td>
             </tr>
 
@@ -83,11 +83,11 @@
                 <td>{{registro.injecao}} KWh</td>
                 <!-- <td>{{registro.saldo_parcial}} KWh</td> -->
                 <td>{{registro.autor}}</td>
-                <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="btn btn-success rounded-5 btn-sm"><i
+                <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="no-print btn btn-success rounded-5 btn-sm"><i
                             class="fa-regular fa-eye"></i></a></td>
-                <td><a href="{% url 'atualizar-registro' pk=registro.pk %}" class="btn btn-primary rounded-5 btn-sm"><i
+                <td><a href="{% url 'atualizar-registro' pk=registro.pk %}" class="no-print btn btn-primary rounded-5 btn-sm"><i
                             class="fa-solid fa-rotate"></i></a></td>
-                <td><a href="{% url 'apagar-registro' pk=registro.pk %}" class="btn btn-danger rounded-5 btn-sm"><i
+                <td><a href="{% url 'apagar-registro' pk=registro.pk %}" class="no-print btn btn-danger rounded-5 btn-sm"><i
                             class="fa-solid fa-trash-can"></i></a></td>
             </tr>
             {% endif %}
@@ -96,7 +96,7 @@
     </table>
 </div>
 
-<div class="container">
+<div class="no-print container">
     {% bootstrap_pagination page_obj %}
 </div>
 

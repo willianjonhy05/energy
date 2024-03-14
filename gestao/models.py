@@ -44,8 +44,8 @@ class Casa(models.Model):
 class Registro(models.Model):
     data = models.DateField("Data do Registro")
     autor = models.CharField("Autor do Registro", max_length=50)
-    consumo = models.IntegerField('03')
-    injecao = models.IntegerField('103')
+    consumo = models.IntegerField('03', help_text='Quantidade de consumo por Quilowatts/Hora')
+    injecao = models.IntegerField('103',help_text='Quantidade de produção por Quilowatts/Hora')
     oficial = models.BooleanField("Captado pela Distribuidora", default=False)
     casa = models.ForeignKey(Casa, verbose_name="Casa", on_delete=models.CASCADE, related_name="casas")
     capacidade_maxima = models.IntegerField('Capacidade Máxima de Produção Solar', default=600)
