@@ -1,48 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static bootstrap5 %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/erro.css">
-    <script defer src="/static/js/erro.js"></script>
-    <title>Erro!</title>
-</head>
+{% block css %} 
+<link rel="stylesheet" href="/static/css/base.css">
+{% endblock %}
+{% block js %} 
 
-<body>
-
-    <div class="container">
-        <h1 class="first-four">4</h1>
-        <div class="cog-wheel1">
-            <div class="cog1">
-                <div class="top"></div>
-                <div class="down"></div>
-                <div class="left-top"></div>
-                <div class="left-down"></div>
-                <div class="right-top"></div>
-                <div class="right-down"></div>
-                <div class="left"></div>
-                <div class="right"></div>
-            </div>
-        </div>
-
-        <div class="cog-wheel2">
-            <div class="cog2">
-                <div class="top"></div>
-                <div class="down"></div>
-                <div class="left-top"></div>
-                <div class="left-down"></div>
-                <div class="right-top"></div>
-                <div class="right-down"></div>
-                <div class="left"></div>
-                <div class="right"></div>
-            </div>
-        </div>
-        <h1 class="second-four">4</h1>
-        <p class="wrong-para">Você não tem permissão de acesso <a href="">clique aqui</a> e vamos começar de novo!</p>
-    </div>
+{% endblock %}
+{% block title %}Restrito{% endblock %}
 
 
-</body>
+{% block conteudo %}
 
-</html>
+<div class="container text-center">
+
+    <img src="/static/img/erro.png" alt="Você não tem autorização de acesso!" width="100%">
+</div>
+
+
+{% endblock %}
