@@ -80,7 +80,7 @@ class Home(TemplateView):
                 context["msg"] = "Bem-vindo, Administrador!"
             else:
                 usuario = self.request.user.usuario
-                context["msg"] = "Bem-vindo, ao nosso sistema administrativo!"
+                context["msg"] = "Bem-vindo, ao sistema administrativo!"
                 context["casas"] = Casa.objects.filter(proprietario=usuario)[:1]
                 casas_count = Casa.objects.filter(proprietario=usuario).count()
                 context["casas_count"] = casas_count
