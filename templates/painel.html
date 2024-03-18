@@ -18,6 +18,22 @@
 
 {% block conteudo %}
 
+<div class="container my-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-custom overflow-hidden text-center bg-body-tertiary border rounded-3">
+        <li class="breadcrumb-item p-2">
+          <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'home' %}">
+            <i class="fa-solid fa-house"></i><span class="m-2"></span>
+            Página Inicial
+          </a>
+        </li>
+        <li class="breadcrumb-item p-2 active" aria-current="page">
+          <a class="link-body-emphasis fw-semibold text-decoration-none" href="{% url 'casas' %}">Lista de Casas</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+
 <div class="container">
 
     <div class="container">
