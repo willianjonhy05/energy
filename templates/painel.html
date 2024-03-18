@@ -20,22 +20,18 @@
 
 <div class="container">
 
-    
     <div class="container">
         <div class="row">
             <br />
             <div class="col text-center">
-                <h2>Painel de Informações Gerais</h2>                
-                <p>Contabilidade de Produção e Consumo de Energia a partir dos Registros Alimentados durante {{dias}} dias.</p>
+                <h2>Painel de Informações Gerais</h2>
+                <p>Contabilidade de Produção e Consumo de Energia da casa {{casa.numero}} a partir dos Registros Alimentados durante {{dias}}
+                    dias.</p>
             </div>
-
-
-
         </div>
         <div class="row text-center">
             <div class="col">
                 <div class="counter">
-                    <!-- <i class="fa fa-code fa-2x"></i> -->
                     <i class="fa fa-solid fa-solar-panel fa-2x"></i>
                     <h2 class="timer count-title count-number" data-to="{{diferenca_injecao}}" data-speed="1500"></h2>
                     <p class="count-text ">Produção desde a última Conta de Luz</p>
@@ -43,7 +39,7 @@
             </div>
             <div class="col">
                 <div class="counter">
-                    <!-- <i class="fa fa-coffee fa-2x"></i> -->
+
                     <i class="fa fa-solid fa-plug fa-2x"></i>
                     <h2 class="timer count-title count-number" data-to="{{diferenca_consumo}}" data-speed="1500"></h2>
                     <p class="count-text ">Consumo desde a última Conta de Luz</p>
@@ -51,7 +47,7 @@
             </div>
             <div class="col">
                 <div class="counter">
-                    <!-- <i class="fa fa-lightbulb-o fa-2x"></i> -->
+
                     <i class="fa fa-solid fa-battery-three-quarters fa-2x"></i>
                     <h2 class="timer count-title count-number" data-to="{{saldo}}" data-speed="1500"></h2>
                     <p class="count-text ">Saldo acumulado desde a última Conta</p>
@@ -59,51 +55,41 @@
             </div>
             <div class="col">
                 <div class="counter">
-                    <!-- <i class="fa fa-bug fa-2x"></i> -->
+
                     <i class="fa-solid fa-bolt fa fa-2x"></i>
-                    <h2 class="timer count-title count-number" data-to="{{diferenca_ate_prod_max}}" data-speed="1500"></h2>
+                    <h2 class="timer count-title count-number" data-to="{{diferenca_ate_prod_max}}" data-speed="1500">
+                    </h2>
                     <p class="count-text ">Falta quanto até a produção máxima</p>
                 </div>
             </div>
         </div>
     </div>
 
-<br>
+    <br>
 
     <div class="container">
-        <!-- <div class="row">
-            <br />
-            <div class="col text-center">
-                <h2>Painel de Informações Gerais</h2>
-                <p>Contabilidade de Produção e Consumo de Energia a partir dos Registros Alimentados</p>
-            </div>
 
-
-
-        </div> -->
         <div class="row text-center">
             <div class="col">
                 <div class="counter">
-                    <!-- <i class="fa fa-code fa-2x"></i> -->
-                    <!-- <i class="fa fa-solid fa-solar-panel fa-2x"></i> -->
+
                     <i class="fa-regular fa-sun fa fa-2x"></i>
-                    <h2 class="timer count-title count-number" data-to="{{media_producao_diaria}}" data-speed="1500"></h2>
+                    <h2 class="timer count-title count-number" data-to="{{media_producao_diaria}}" data-speed="1500">
+                    </h2>
                     <p class="count-text ">Média de Produção Diária</p>
                 </div>
             </div>
             <div class="col">
                 <div class="counter">
-                    <!-- <i class="fa fa-coffee fa-2x"></i> -->
-                    <!-- <i class="fa fa-solid fa-plug fa-2x"></i> -->
                     <i class="fa-solid fa-plug-circle-bolt fa fa-2x"></i>
-                    <h2 class="timer count-title count-number" data-to="{{media_consumo_diario}}" data-speed="1500"></h2>
+                    <h2 class="timer count-title count-number" data-to="{{media_consumo_diario}}" data-speed="1500">
+                    </h2>
                     <p class="count-text ">Média de Consumo Diário</p>
                 </div>
             </div>
             <div class="col">
                 <div class="counter">
-                    <!-- <i class="fa fa-lightbulb-o fa-2x"></i> -->
-                    <!-- <i class="fa fa-solid fa-battery-three-quarters fa-2x"></i> -->
+
                     <i class="fa-solid fa-car-battery fa fa-2x"></i>
                     <h2 class="timer count-title count-number" data-to="{{total}}" data-speed="1500"></h2>
                     <p class="count-text ">Total de Energia Contabilizada</p>
@@ -111,8 +97,6 @@
             </div>
             <div class="col">
                 <div class="counter">
-                    <!-- <i class="fa fa-bug fa-2x"></i> -->
-                    <!-- <i class="fa-solid fa-bolt fa fa-2x"></i> -->
                     <i class="fa-brands fa-searchengin fa fa-2x"></i>
                     <h2 class="timer count-title count-number" data-to="{{prod_maxima}}" data-speed="1500"></h2>
                     <p class="count-text ">Capacidade de Produção Máxima</p>
