@@ -35,8 +35,17 @@
   </div>
 
 <div class="container">
-
-    <div class="container">
+    {% if registro_oficial_recente == registro_recente %}
+    <div class="row">
+        <br />
+        <div class="col text-center">
+            <h2>Painel de Informações Gerais</h2>
+            <p>{{msg}}</p>
+        </div>
+    </div>
+    {% endif %}    
+    {% if registro_oficial_recente != registro_recente %}
+    <div class="container">      
         <div class="row">
             <br />
             <div class="col text-center">
@@ -80,15 +89,11 @@
             </div>
         </div>
     </div>
-
     <br>
-
     <div class="container">
-
         <div class="row text-center">
             <div class="col">
                 <div class="counter">
-
                     <i class="fa-regular fa-sun fa fa-2x"></i>
                     <h2 class="timer count-title count-number" data-to="{{media_producao_diaria}}" data-speed="1500">
                     </h2>
@@ -120,6 +125,7 @@
             </div>
         </div>
     </div>
+    {% endif %} 
 </div>
 
 {% endblock %}
