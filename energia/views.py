@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
@@ -102,40 +102,43 @@ class Painel(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)  
         casa = Casa.objects.get(pk=casa_id)
         registros = Registro.objects.filter(casa=casa).order_by('-data')
-        registro_recente = Registro.objects.filter(casa=casa).latest('data')
-        registro_oficial_recente = Registro.objects.filter(casa=casa, oficial=True).latest('data')
-        context['registro_oficial_recente'] = registro_oficial_recente    
-        context['registro_recente'] = registro_recente
 
-        if not registros.exists():
-            return render(self.request, 'registro/cadastrar.html', context=context)    
+        if registros.exists():
+            registro_recente = Registro.objects.filter(casa=casa).latest('data')
+            registro_oficial_recente = Registro.objects.filter(casa=casa, oficial=True).latest('data')
+            context['registro_oficial_recente'] = registro_oficial_recente    
+            context['registro_recente'] = registro_recente
 
-        if registro_oficial_recente == registro_recente:
-            context["msg"] = "Informações insuficientes para gerar um Painel! Insira dados e retorne!"           
+            if registro_oficial_recente == registro_recente:
+                context["msg"] = "Informações insuficientes para gerar um Painel! Insira dados e retorne!"           
+
+            else:
+                diferenca_consumo = registro_recente.consumo - registro_oficial_recente.consumo
+                ultima_data = registro_recente.data
+                ultima_data_oficial = registro_oficial_recente.data
+                dias = abs((ultima_data_oficial - ultima_data).days)        
+                diferenca_injecao = registro_recente.injecao - registro_oficial_recente.injecao
+                media_producao_diaria = diferenca_injecao // dias
+                saldo = diferenca_injecao - diferenca_consumo
+                prod_maxima = registro_oficial_recente.capacidade_maxima
+                diferenca_ate_prod_max = prod_maxima - diferenca_injecao
+                media_consumo_diario = diferenca_consumo // dias
+                total = diferenca_consumo + diferenca_injecao        
+                context['diferenca_consumo'] = diferenca_consumo
+                context['diferenca_injecao'] = diferenca_injecao
+                context['diferenca_ate_prod_max'] = diferenca_ate_prod_max
+                context['casa'] = casa
+                context['registros'] = registros
+                context['saldo'] = saldo        
+                context['total'] = total   
+                context['prod_maxima'] = prod_maxima   
+                context['media_producao_diaria'] = media_producao_diaria
+                context['media_consumo_diario'] = media_consumo_diario
+                context['dias'] = dias            
 
         else:
-            diferenca_consumo = registro_recente.consumo - registro_oficial_recente.consumo
-            ultima_data = registro_recente.data
-            ultima_data_oficial = registro_oficial_recente.data
-            dias = abs((ultima_data_oficial - ultima_data).days)        
-            diferenca_injecao = registro_recente.injecao - registro_oficial_recente.injecao
-            media_producao_diaria = diferenca_injecao // dias
-            saldo = diferenca_injecao - diferenca_consumo
-            prod_maxima = registro_oficial_recente.capacidade_maxima
-            diferenca_ate_prod_max = prod_maxima - diferenca_injecao
-            media_consumo_diario = diferenca_consumo // dias
-            total = diferenca_consumo + diferenca_injecao        
-            context['diferenca_consumo'] = diferenca_consumo
-            context['diferenca_injecao'] = diferenca_injecao
-            context['diferenca_ate_prod_max'] = diferenca_ate_prod_max
-            context['casa'] = casa
-            context['registros'] = registros
-            context['saldo'] = saldo        
-            context['total'] = total   
-            context['prod_maxima'] = prod_maxima   
-            context['media_producao_diaria'] = media_producao_diaria
-            context['media_consumo_diario'] = media_consumo_diario
-            context['dias'] = dias            
+            context['msg'] = "Nenhum registro encontrado para esta casa. Registre dados e volte novamente!"
+            context['redirect_url'] = reverse('registrar-registro', kwargs={'casa_id': casa_id})
 
         return context
     
