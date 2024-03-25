@@ -2,7 +2,17 @@
 {% load static bootstrap5 %}
 
 {% block css %} {% endblock %}
-{% block js %} {% endblock %}
+{% block js %}
+<script>
+
+  var tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  var tooltipList = tooltips.map(function (tooltip) {
+    return new bootstrap.Tooltip(tooltip);
+  });
+</script>
+
+
+{% endblock %}
 {% block title %}Lista de Casas{% endblock %}
 
 
@@ -36,11 +46,12 @@
           <th scope="col">Rua</th>
           <th scope="col">Bairro</th>
           <th scope="col">Número</th>
-          <th scope="col">Painel</th>
+          <th scope="col">Opções</th>
+          <!-- <th scope="col">Painel</th>
           <th scope="col">Detalhar</th>
           <th scope="col">Atualizar</th>          
           <th scope="col">Registro</th>
-          <th scope="col">Novo Registro</th>
+          <th scope="col">Novo Registro</th> -->
         </tr>
       </thead>
       <tbody>
@@ -49,17 +60,52 @@
           <td>{{casa.rua}}</td>
           <td>{{casa.bairro}}</td>
           <td>{{casa.numero}}</td>
-          <td><a href="{% url 'painel' casa_id=casa.pk %}" class="btn btn-info rounded-5 btn-sm"><i class="fa-solid fa-gauge"></i></a></td>
+          <td><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+              data-bs-target="#exampleModal">
+              <i class="fa-solid fa-bars"></i>
+            </button></td>
+          <!-- <td><a href="{% url 'painel' casa_id=casa.pk %}" class="btn btn-info rounded-5 btn-sm"><i class="fa-solid fa-gauge"></i></a></td>
           <td><a href="{% url 'detalhar-casa' pk=casa.pk %}" class="btn btn-success rounded-5 btn-sm"><i
                 class="fa-regular fa-eye"></i></a></td>
           <td><a href="{% url 'atualizar-casa' pk=casa.pk %}" class="btn btn-primary rounded-5 btn-sm"><i
                 class="fa-solid fa-rotate"></i></a></td>
-          <!-- <td><a href="{% url 'apagar-casa' pk=casa.pk %}" class="btn btn-danger rounded-5 btn-sm"><i
-                class="fa-solid fa-trash-can"></i></a></td> -->
           <td><a href="{% url 'historico' casa_id=casa.pk %}" class="btn btn-info rounded-5 btn-sm"><i
                 class="fa-regular fa-file-lines"></i></a></td>
-          <td><a href="{% url 'registrar-registro' casa_id=casa.pk %}" class="btn btn-primary rounded-5 btn-sm"><i class="fa-regular fa-pen-to-square"></i></a></td>
+          <td><a href="{% url 'registrar-registro' casa_id=casa.pk %}" class="btn btn-primary rounded-5 btn-sm"><i class="fa-regular fa-pen-to-square"></i></a></td> -->
         </tr>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Opções para a Casa {{casa.numero}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Navegue pelos botões abaixo e gerencie as informações de sua casa {{casa.numero}}. Você pode acessar
+                  ao Painel Geral de Informações, atualizar dados da casa, consultar Histórico de Registros e criar um
+                  Novo Registro.</p>
+                <a href="{% url 'painel' casa_id=casa.pk %}" class="btn btn-warning rounded-5" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="Painel Geral de Informações">
+                  <i class="fa-solid fa-gauge"></i>
+                </a>
+                <a href="{% url 'atualizar-casa' pk=casa.pk %}" class="btn btn-success rounded-5"
+                  data-bs-toggle="tooltip" data-bs-placement="top" title="Atualizar Informações do Imóvel"><i
+                    class="fa-solid fa-rotate"></i></a>
+                <a href="{% url 'historico' casa_id=casa.pk %}" class="btn btn-info rounded-5" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="Histórico de Registros do Imóvel"><i
+                    class="fa-regular fa-file-lines"></i></a>
+                <a href="{% url 'registrar-registro' casa_id=casa.pk %}" class="btn btn-secondary rounded-5"
+                  data-bs-toggle="tooltip" data-bs-placement="top" title="Criar Novo Registro do Imóvel"><i
+                    class="fa-regular fa-pen-to-square"></i></a>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Listar Casas</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {% endfor %}
 
       </tbody>

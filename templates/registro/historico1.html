@@ -3,7 +3,11 @@
 
 {% block css %} {% endblock %}
 {% block js %}
+<script defer src="/static/js/formataCEP.js"></script>
 <script defer src="/static/js/print.js"></script>
+<script>
+    var cepValue = '{{ casa.cep }}'; 
+</script>
 {% endblock %}
 {% block title %}Registros{% endblock %}
 
@@ -40,6 +44,7 @@
     <h3>Informações da Casa</h3>
     <p><strong>Rua:</strong> {{ casa.rua }}</p>
     <p><strong>Bairro:</strong> {{ casa.bairro }}</p>
+    <p><strong>CEP:</strong> <span id="cep"></span></p>
     <p><strong>Número:</strong> {{ casa.numero }}</p>
     <p><strong>Proprietário:</strong> {{ casa.proprietario }}</p>
     <p><strong>Contrato com Distribuidora:</strong> {{ casa.contrato }}</p>
