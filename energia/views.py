@@ -51,7 +51,7 @@ def DocumentCasa(request, casa_id):
     for registro in registros:
         y -= 20
         data_formatada = registro.data.strftime('%d/%m/%Y') 
-        p.drawString(100, y, f"Data: {data_formatada}| Autor: {registro.autor}| Consumo: {registro.consumo}| Produção: {registro.injecao}")
+        p.drawString(80, y, f"Data: {data_formatada}| Autor: {registro.autor}| Consumo: {registro.consumo}| Produção: {registro.injecao}| Oficial: {registro.oficial}")
     p.showPage()
     p.save()
     return response
