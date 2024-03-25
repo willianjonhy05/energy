@@ -2,6 +2,7 @@ body {
     background-image: url('/static/img/solar.jpg');
     background-position: center;
     background-size: cover;
+    background-repeat: no-repeat;   
     opacity: 5.0;
 }
 
@@ -36,4 +37,11 @@ body {
 .cta:hover{
     background-color: #494c4e; 
     color: white;
+}
+
+@media (max-width: 768px) {
+    body {
+        background-attachment: fixed;
+        background-repeat: no-repeat;        
+    }
 }
