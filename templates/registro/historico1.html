@@ -8,6 +8,13 @@
 <script>
     var cepValue = '{{ casa.cep }}'; 
 </script>
+<script>
+
+    var tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltips.map(function (tooltip) {
+        return new bootstrap.Tooltip(tooltip);
+    });
+</script>
 {% endblock %}
 {% block title %}Registros{% endblock %}
 
@@ -36,10 +43,11 @@
 </div>
 
 <div class="container">
-    
+
     <h2>Detalhes do Registro</h2>
     <button class="btn btn-primary rounded-circle p-2 lh-1" id="btnPrint"><i class="fa-solid fa-print"></i></button>
-    <a class="btn btn-primary rounded-circle p-2 lh-1" href="{% url 'historico_casa_pdf' casa_id=casa.pk %}"><i class="fa-solid fa-file-pdf"></i></a>
+    <a class="btn btn-primary rounded-circle p-2 lh-1" href="{% url 'historico_casa_pdf' casa_id=casa.pk %}"><i
+            class="fa-solid fa-file-pdf"></i></a>
     <hr>
     <h3>Informações da Casa</h3>
     <p><strong>Rua:</strong> {{ casa.rua }}</p>
@@ -50,20 +58,39 @@
     <p><strong>Contrato com Distribuidora:</strong> {{ casa.contrato }}</p>
 
     <h3>Registros de Consumo e Injeção de Energia Elétrica</h3>
+
+    {% if qtde_reg > 1 %}
+
+    <div class="input-group mt-2 mb-2 d-flex justify-content-between align-items-center">
+        <form method="get" class="d-flex">
+            <select name="category" class="form-select" id="inputGroupSelect04"
+                aria-label="Selecione a opção desejada de visualização">
+                <option>Todas ({{qtde_reg}})</option>
+                <option value="oficial">Oficiais ({{qtde_reg_ofc}})</option>
+                <option value="nao_oficial">Não Oficiais ({{qtde_reg_no_ofc}})</option>
+            </select>
+            <input class="btn btn-primary ms-2" type="submit" value="Filtrar">
+            
+        </form>          
+    </div>
+
+    {% endif %}
+
+
+
     <table class="table">
         <thead>
             <tr>
                 <th>Data</th>
                 <th>Consumo</th>
                 <th>Injeção</th>
-                <!-- <th>Saldo</th> -->
-                <th>Autor do Registro</th>
-                <th class="no-print">Detalhar</th>
+                <th class="no-print">Opções</th>
+                <!-- <th class="no-print">Detalhar</th>
                 <th class="no-print">Atualizar</th>
-                <th class="no-print">Deletar</th>
+                <th class="no-print">Deletar</th> -->
             </tr>
         </thead>
-        <tbody>            
+        <tbody>
             {% for registro in page_obj %}
             {% if registro.oficial == False %}
 
@@ -71,31 +98,80 @@
                 <th>{{registro.data}}</th>
                 <td>{{registro.consumo}} KWh</td>
                 <td>{{registro.injecao}} KWh</td>
-                <!-- <td>{{registro.saldo_parcial}} KWh</td> -->
-                <td>{{registro.autor}}</td>
-                <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="no-print btn btn-success rounded-5 btn-sm"><i
-                            class="fa-regular fa-eye"></i></a></td>
-                <td><a href="{% url 'atualizar-registro' pk=registro.pk %}" class="no-print btn btn-primary rounded-5 btn-sm"><i
-                            class="fa-solid fa-rotate"></i></a></td>
-                <td><a href="{% url 'apagar-registro' pk=registro.pk %}" class="no-print btn btn-danger rounded-5 btn-sm"><i
-                            class="fa-solid fa-trash-can"></i></a></td>
+                <td class="no-print"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalUm">
+                        <i class="fa-solid fa-bars"></td>
+
             </tr>
 
+            <div class="modal fade" id="exampleModalUm" tabindex="-1" aria-labelledby="exampleModalLabelUm"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabelUm">Registro do dia {{registro.data}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Este Registro da casa {{casa.numero}} foi capturado por {{registro.autor}} e <strong>não
+                                    é um registro considerado pela sua distribuidora de energia.</strong><br>Produção
+                                Injetada: {{registro.injecao}} KWh<br> Domiciliar: {{registro.consumo}} KWh</p>
+                            <a href="{% url 'atualizar-registro' pk=registro.pk %}"
+                                class="no-print btn btn-primary rounded-5" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Atualizar Informações do Registro"><i
+                                    class="fa-solid fa-rotate"></i></a>
+                            <a href="{% url 'apagar-registro' pk=registro.pk %}"
+                                class="no-print btn btn-danger rounded-5" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Apagar Registro"><i
+                                    class="fa-solid fa-trash-can"></i></a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {% else %}
             <tr class="table-info">
                 <th>{{registro.data}}</th>
                 <td>{{registro.consumo}} KWh</td>
                 <td>{{registro.injecao}} KWh</td>
-                <!-- <td>{{registro.saldo_parcial}} KWh</td> -->
-                <td>{{registro.autor}}</td>
-                <td><a href="{% url 'detalhar-registro' pk=registro.pk %}" class="no-print btn btn-success rounded-5 btn-sm"><i
-                            class="fa-regular fa-eye"></i></a></td>
-                <td><a href="{% url 'atualizar-registro' pk=registro.pk %}" class="no-print btn btn-primary rounded-5 btn-sm"><i
-                            class="fa-solid fa-rotate"></i></a></td>
-                <td><a href="{% url 'apagar-registro' pk=registro.pk %}" class="no-print btn btn-danger rounded-5 btn-sm"><i
-                            class="fa-solid fa-trash-can"></i></a></td>
+                <td class="no-print"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        <i class="fa-solid fa-bars"></td>
+
             </tr>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Registro do dia {{registro.data}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Este Registro da casa {{casa.numero}} foi capturado por {{registro.autor}} e <strong>
+                                é um registro considerado pela sua distribuidora de energia.</strong><br>Produção
+                            Injetada: {{registro.injecao}} KWh<br> Domiciliar: {{registro.consumo}} KWh</p>
+                            <a href="{% url 'atualizar-registro' pk=registro.pk %}"
+                                class="no-print btn btn-primary rounded-5" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Atualizar Informações do Registro"><i
+                                    class="fa-solid fa-rotate"></i></a>
+                            <a href="{% url 'apagar-registro' pk=registro.pk %}"
+                                class="no-print btn btn-danger rounded-5" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Apagar Registro"><i
+                                    class="fa-solid fa-trash-can"></i></a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             {% endif %}
             {% endfor %}
         </tbody>

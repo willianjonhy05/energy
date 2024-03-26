@@ -31,13 +31,28 @@ class HistoricoCasa(LoginRequiredMixin, ListView):
         casa_id = self.kwargs.get('casa_id')
         casa = Casa.objects.get(pk=casa_id)
         queryset = Registro.objects.filter(casa=casa).order_by('-data')
+        filtro_oficial = self.request.GET.get('category')
+
+        if filtro_oficial == 'oficial':
+            queryset = Registro.objects.filter(casa=casa, oficial=True).order_by('-data')
+        elif filtro_oficial == 'nao_oficial':
+            queryset = Registro.objects.filter(casa=casa, oficial=False).order_by('-data')
+        else:
+            queryset = Registro.objects.filter(casa=casa).order_by('-data')
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         casa_id = self.kwargs.get('casa_id')
         casa = Casa.objects.get(pk=casa_id)
+        qtde_reg = Registro.objects.filter(casa=casa_id).count()
+        qtde_reg_ofc = Registro.objects.filter(casa=casa_id, oficial=True).count()
+        qtde_reg_no_ofc = Registro.objects.filter(casa=casa_id, oficial=False).count()
         context['casa'] = casa
+        context['qtde_reg'] = qtde_reg
+        context['qtde_reg_ofc'] = qtde_reg_ofc
+        context['qtde_reg_no_ofc'] = qtde_reg_no_ofc
         return context
     
 def DocumentCasa(request, casa_id):
