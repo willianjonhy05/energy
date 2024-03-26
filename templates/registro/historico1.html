@@ -48,6 +48,7 @@
     <button class="btn btn-primary rounded-circle p-2 lh-1" id="btnPrint"><i class="fa-solid fa-print"></i></button>
     <a class="btn btn-primary rounded-circle p-2 lh-1" href="{% url 'historico_casa_pdf' casa_id=casa.pk %}"><i
             class="fa-solid fa-file-pdf"></i></a>
+    <a class="btn btn-primary rounded-circle p-2 lh-1" href="{% url 'registrar-registro' casa_id=casa.pk %}"><i class="fa-regular fa-pen-to-square"></i></a>
     <hr>
     <h3>Informações da Casa</h3>
     <p><strong>Rua:</strong> {{ casa.rua }}</p>
