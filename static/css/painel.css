@@ -28,3 +28,7 @@
     display: table;
     color: #FFF000;
 }
+
+#info {
+    cursor: help;
+}

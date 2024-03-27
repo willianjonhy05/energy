@@ -54,8 +54,8 @@
             <div class="col text-center">
                 <h2>Painel de Informações Gerais</h2>
                 <p>Contabilidade de Produção e Consumo de Energia da casa {{casa.numero}} a partir dos Registros
-                    Alimentados durante {{dias}}
-                    dias.</p>
+                    Alimentados durante <span id="info" data-bs-toggle="popover" data-bs-placement="bottom" title="Última Atualização" data-bs-content="{{data_do_ultimo_registro }}"><u>{{dias}}
+                    dias.</u></span></p>
             </div>
         </div>
         <div class="row text-center">
@@ -140,6 +140,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Ative os popovers
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl)
+    })
+  </script>
 {% endif %}
 
 {% endblock %}

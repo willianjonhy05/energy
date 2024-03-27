@@ -121,8 +121,10 @@ class Painel(LoginRequiredMixin, TemplateView):
         if registros.exists():
             registro_recente = Registro.objects.filter(casa=casa).latest('data')
             registro_oficial_recente = Registro.objects.filter(casa=casa, oficial=True).latest('data')
+            data_do_ultimo_registro = registro_recente.data
             context['registro_oficial_recente'] = registro_oficial_recente    
             context['registro_recente'] = registro_recente
+            context['data_do_ultimo_registro'] = data_do_ultimo_registro  
 
             if registro_oficial_recente == registro_recente:
                 context["msg"] = "Informações insuficientes para gerar um Painel! Insira dados e retorne!"           
