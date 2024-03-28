@@ -3,8 +3,9 @@
 
 {% block css %} {% endblock %}
 {% block js %}
-<script defer src="/static/js/formataCEP.js"></script>
-<script defer src="/static/js/print.js"></script>
+<script defer src="{% static 'js/formataCEP.js' %}"></script>
+<script defer src="{% static 'js/print.js' %}"></script>
+
 <script>
     var cepValue = '{{ casa.cep }}'; 
 </script>
@@ -86,9 +87,6 @@
                 <th>Consumo</th>
                 <th>Injeção</th>
                 <th class="no-print">Opções</th>
-                <!-- <th class="no-print">Detalhar</th>
-                <th class="no-print">Atualizar</th>
-                <th class="no-print">Deletar</th> -->
             </tr>
         </thead>
         <tbody>

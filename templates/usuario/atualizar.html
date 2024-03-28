@@ -3,14 +3,15 @@
 
 {% block css %} 
 
-<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
 
 {% endblock %}
 {% block js %} 
-<script defer src="/static/js/datas.js"></script>
-<script defer src="/static/js/data.js"></script>
-<script defer src="/static/js/cpf.js"></script>
-<script defer src="/static/js/telefone.js"></script>
+<script defer src="{% static 'js/datas.js' %}"></script>
+<script defer src="{% static 'js/data.js' %}"></script>
+<script defer src="{% static 'js/cpf.js' %}"></script>
+<script defer src="{% static 'js/telefone.js' %}"></script>
+
 
 {% endblock %}
 {% block title %}Atualizar Perfil{% endblock %}

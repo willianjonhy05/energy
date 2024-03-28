@@ -2,7 +2,7 @@
 {% load static bootstrap5 %}
 
 {% block css %} 
-<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
 {% endblock %}
 {% block js %} 
 
@@ -51,22 +51,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-sm-6 col-lg-4 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Casa Nº {{user.usuario.nome}}</h5>
-                <p class="card-text">Rua: {{casa.rua}}</p>
-                <p class="card-text">Bairro: {{casa.bairro}}</p>
-                <p class="card-text">Proprietário: {{casa.proprietario}} </p>
-                <p class="card-text">CEP: {{casa.cep}} </p>
-                <p class="card-text">Contrato Nº: {{casa.contrato}}</p> 
-                <p class="card-text"><small class="text-body-secondary"></small></p>
-                <a href="#" class="btn btn-primary rounded-5 btn-sm"><i class="fa-solid fa-rotate"></i></a>
-                <a href="#" class="btn btn-danger rounded-5 btn-sm"><i class="fa-solid fa-trash-can"></i></a>
-                <a href="#" class="btn btn-info rounded-5 btn-sm"><i class="fa-regular fa-file-lines"></i></a>
-            </div>
-        </div>
-    </div> -->
+
 </div>
 
 

@@ -2,7 +2,7 @@
 {% load static bootstrap5 %}
 
 {% block css %} 
-<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
 {% endblock %}
 {% block js %} 
 
@@ -13,8 +13,7 @@
 {% block conteudo %}
 
 <div class="container text-center">
-
-    <img src="/static/img/erro.png" alt="Você não tem autorização de acesso!" width="100%">
+    <img src="{% static 'img/erro.png' %}" alt="Você não tem autorização de acesso!" width="100%">
 </div>
 
 
