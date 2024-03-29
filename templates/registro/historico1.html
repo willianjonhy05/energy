@@ -94,7 +94,7 @@
             {% if registro.oficial == False %}
 
             <tr>
-                <th>{{registro.data}}</th>
+                <th>{{ registro.data|date:"d/m/Y" }}</th>
                 <td>{{registro.consumo}} KWh</td>
                 <td>{{registro.injecao}} KWh</td>
                 <td class="no-print"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -133,7 +133,7 @@
 
             {% else %}
             <tr class="table-info">
-                <th>{{registro.data}}</th>
+                <th>{{ registro.data|date:"d/m/Y" }}</th>
                 <td>{{registro.consumo}} KWh</td>
                 <td>{{registro.injecao}} KWh</td>
                 <td class="no-print"><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
